@@ -1,14 +1,22 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowListener;
+
+import org.w3c.dom.Text;
+
 import java.awt.*;
 
 public class ui extends Frame{
 
     public ui(){
+        Frame frame = this;
+
         TextArea textArea = new TextArea(4,4);
         textArea.setBounds(100, 50, 300, 150);
         add(textArea);
@@ -105,6 +113,33 @@ public class ui extends Frame{
             public void keyPressed(KeyEvent e) {
                 // TODO Auto-generated method stub
                 if (e.getKeyCode()==KeyEvent.VK_ENTER){ //return key
+                    String inputValue = text.getText();
+                    if (inputValue.trim().length()==0){ //empty string
+                        Dialog dialog = new Dialog(frame, "Error",true);
+                        dialog.setLayout(new FlowLayout());
+                        dialog.setBounds(10, 10, 250, 250);
+                        Label label = new Label("You can not add an empty value");
+                        label.setBounds(10, 10, 100, 20);
+                        Button button = new Button("Close");
+                        button.setBounds(10, 100, 100, 20);
+                        button.addActionListener(new ActionListener() {
+
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                // TODO Auto-generated method stub
+                                dialog.setVisible(false);
+                            }
+                            
+                        });
+                        dialog.add(label);
+                        dialog.add(button);
+                        dialog.setVisible(true);
+                        
+                       
+
+                        return;
+                    }
+                    
                     list.add(text.getText());
                     text.setText("");
                 }       
